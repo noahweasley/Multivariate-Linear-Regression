@@ -5,8 +5,6 @@ import 'package:test/test.dart';
 
 void main() {
   group('MultivariateLinearRegression', () {
-    test('can be instantiated', () {
-      // expect(MultivariateLinearRegression(), isNotNull);
-    });
+    test('can be instantiated', () {});
   });
 }

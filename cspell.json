@@ -22,6 +22,7 @@
     "endtemplate",
     "invxx",
     "linalg",
-    "multivariate_linear_regression"
+    "multivariate_linear_regression",
+    "noahweasley"
   ]
 }

@@ -3,6 +3,8 @@ import 'package:ml_linalg/matrix.dart';
 import 'package:ml_linalg/vector.dart';
 import 'package:multivariate_linear_regression/src/utils/matrix_ext.dart';
 
+/// Author: @noahweasley
+///
 /// {@template multivariate_linear_regression}
 /// Multivariate linear regression with optional intercept.
 /// {@endtemplate}
@@ -14,6 +16,9 @@ class MultivariateLinearRegression {
     this.intercept = true,
     this.statistics = true,
   }) {
+    _originalX = x;
+    _originalY = y;
+
     _x = Matrix.fromList(x);
     _y = Matrix.fromList(y);
 
@@ -51,8 +56,8 @@ class MultivariateLinearRegression {
 
   double? _variance;
 
-  late final List<List<double>> _originalX = _x.toList().map(List<double>.from).toList();
-  late final List<List<double>> _originalY = _y.toList().map(List<double>.from).toList();
+  late List<List<double>> _originalX;
+  late List<List<double>> _originalY;
 
   ///
   final bool intercept;
@@ -67,36 +72,34 @@ class MultivariateLinearRegression {
   int get outputs => _outputs;
 
   /// Regression coefficients (features × outputs)
-  List<List<double>> get weights => _beta.toList().map(List<double>.from).toList();
+  List<Iterable<double>> get weights => _beta.toList();
 
-  /// Standard error (sqrt of variance)
+  /// Standard error (square root of variance)
   double? get stdError => _variance == null ? null : sqrt(_variance!);
 
-  /// (XᵀX)⁻¹ used for coefficient statistics
-  Matrix get stdErrorMatrix => _x.transpose().multiply(_x).pseudoInverse();
+  /// Standard Error Matrix used for coefficient statistics
+  Matrix get stdErrorMatrix => _x.transpose().multiply(_x).pseudoInverse() * (_variance ?? 0);
 
   /// Standard errors for each coefficient
   List<double> get stdErrors {
-    final varMatrix = stdErrorMatrix * (_variance ?? 0);
-    return List.generate(varMatrix.rowCount, (i) => sqrt(varMatrix[i][i]));
+    return stdErrorMatrix.diagonal().map((d) => sqrt(d)).toList();
   }
 
   /// t-statistics for each coefficient
   List<double> get tStats {
     final errors = stdErrors;
+
     return List.generate(weights.length, (i) {
       final coefficient = weights[i].first;
       return errors[i] == 0 ? 0.0 : coefficient / errors[i];
     });
   }
 
-  Matrix _computeBeta() {
-    return _x.pseudoInverse().multiply(_y);
-  }
+  Matrix _computeBeta() => _x.pseudoInverse().multiply(_y);
 
   double _computeVariance() {
-    final fitted = _x.multiply(_beta);
-    final residuals = _y - fitted;
+    final fittedValues = _x.multiply(_beta);
+    final residuals = _y - fittedValues;
 
     final squaredSum = residuals.toList().map((ri) => pow(ri.first, 2)).reduce((a, b) => a + b);
 
@@ -104,17 +107,22 @@ class MultivariateLinearRegression {
   }
 
   ///
-  List<double> predict(List<double> x) {
+  List<double> _predict(List<double> x) {
+    final result = List<double>.filled(outputs, 0);
+
     if (x.length != inputs) {
       throw ArgumentError('Expected $inputs inputs, got ${x.length}');
     }
 
-    final row = intercept ? [...x, 1.0] : x;
-    final result = List<double>.filled(outputs, 0);
+    if (intercept) {
+      for (var i = 0; i < outputs; i++) {
+        result[i] = _beta[inputs][i];
+      }
+    }
 
-    for (var j = 0; j < outputs; j++) {
-      for (var i = 0; i < row.length; i++) {
-        result[j] += _beta[i][j] * row[i];
+    for (var i = 0; i < inputs; i++) {
+      for (var j = 0; j < outputs; j++) {
+        result[j] += _beta[i][j] * x[i];
       }
     }
 
@@ -122,9 +130,7 @@ class MultivariateLinearRegression {
   }
 
   ///
-  List<List<double>> predictBatch(List<List<double>> x) {
-    return x.map(predict).toList();
-  }
+  List<List<double>> predict(List<List<double>> x) => x.map(_predict).toList();
 
   ///
   Map<String, dynamic> toJson() {
