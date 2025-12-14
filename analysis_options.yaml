@@ -1,1 +1,44 @@
-include: package:very_good_analysis/analysis_options.yaml
+include: package:very_good_analysis/analysis_options.6.0.0.yaml
+
+formatter:
+  page_width: 125
+
+analyzer:
+  exclude:
+    - build/**
+    - lib/**.g.dart
+    - lib/**/*.g.dart
+    - lib/api/models/responses/**/*.g.dart
+    - lib/api/models/requests/**/*.g.dart
+    - lib/generated/**
+
+linter:
+  rules:
+    public_member_api_docs: true
+    lines_longer_than_80_chars: ignore
+    prefer_final_fields: true
+    prefer_single_quotes: true
+    prefer_interpolation_to_compose_strings: true
+    always_use_package_imports: true
+    avoid_print: true
+    no_wildcard_variable_uses: true
+    prefer_const_constructors: true
+    avoid_unused_constructor_parameters: true
+    await_only_futures: true
+    directives_ordering: true
+    empty_constructor_bodies: true
+    empty_statements: true
+    hash_and_equals: true
+    implementation_imports: true
+    null_closures: true
+    package_api_docs: true
+    slash_for_doc_comments: true
+    test_types_in_equals: true
+    throw_in_finally: true
+    type_init_formals: true
+    cancel_subscriptions: true
+    prefer_final_locals: true
+    use_super_parameters: true
+    prefer_const_constructors_in_immutables: true
+  errors:
+    invalid_annotation_target: ignore
