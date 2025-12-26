@@ -1,7 +1,7 @@
-import '../utils/csv.dart';
 import 'package:test/test.dart';
 
 import '../../lib/multivariate_linear_regression.dart';
+import '../utils/csv.dart';
 
 void main() {
   group('Distillation Tower Test', () {
