@@ -42,6 +42,7 @@ class Matrix {
     if (data.isEmpty) return Matrix._([]);
 
     final c = data[0].length;
+
     for (final row in data) {
       if (row.length != c) {
         throw ArgumentError('Jagged matrix is not allowed');

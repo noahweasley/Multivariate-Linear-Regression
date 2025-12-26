@@ -170,11 +170,7 @@ class MultivariateLinearRegression {
     final fitted = _x.multiply(_beta);
     final residuals = _y.clone().add(fitted.neg());
 
-    return residuals.toList().fold(
-              0.0,
-              (result, residual) => result + pow(residual[0], 2),
-            ) /
-        (_y.rows - _x.cols);
+    return residuals.toList().fold(0.0, (result, residual) => result + pow(residual[0], 2)) / (_y.rows - _x.cols);
   }
 
   /// Predicts output values for a single input vector.
@@ -205,10 +201,7 @@ class MultivariateLinearRegression {
   }
 
   /// Predicts outputs for multiple input rows.
-  List<List<double>> predictBatch(
-    List<List<double>> x,
-  ) =>
-      x.map(predict).toList();
+  List<List<double>> predictBatch(List<List<double>> x) => x.map(predict).toList();
 
   /// Converts the model to a JSON-compatible map.
   Map<String, dynamic> toJson() {
