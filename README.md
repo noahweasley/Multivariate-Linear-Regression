@@ -1,8 +1,8 @@
 # Multivariate Linear Regression
 
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
+[![Style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 ![Test Coverage](https://img.shields.io/badge/Test%20coverage-100%25-green)
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
+[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)][mason_link]
 [![License: MIT][license_badge]][license_link]
 
 Multivariate linear regression for Dart with support for multiple outputs and optional intercept.
