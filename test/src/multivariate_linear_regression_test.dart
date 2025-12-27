@@ -103,7 +103,7 @@ void main() {
       ];
 
       final mlr = MultivariateLinearRegression(x: x42X, y: x42Y, intercept: false);
-      final weights = mlr.weights.map((row) => row.toList()).toList();
+      final weights = mlr.weights.toList();
 
       for (var i = 0; i < weights.length; i++) {
         expect(weights[i][0], closeTo(expectedWeights[i], 1e-6));
@@ -126,6 +126,7 @@ void main() {
         ],
       );
 
+      // TODO: test toJson()
       // final json = mlr.toJson();
       final loaded = MultivariateLinearRegression.load(mlr);
 
@@ -147,7 +148,7 @@ void main() {
       ];
 
       final mlr = MultivariateLinearRegression(x: X, y: Y, intercept: true);
-      final weights = mlr.weights.map((row) => row.toList()).toList();
+      final weights = mlr.weights;
 
       expect(weights[0][0], closeTo(0.53, 0.01));
       expect(weights[1][0], closeTo(-3.29, 0.01));
@@ -167,7 +168,7 @@ void main() {
       ];
 
       final mlr = MultivariateLinearRegression(x: X, y: Y, intercept: false);
-      final weights = mlr.weights.map((row) => row.toList()).toList();
+      final weights = mlr.weights;
 
       expect(weights[0][0], closeTo(0.53, 0.01));
       expect(weights[1][0], closeTo(-3.29, 0.01));
@@ -187,7 +188,7 @@ void main() {
       ];
 
       final mlr = MultivariateLinearRegression(x: X, y: Y);
-      final weights = mlr.weights.map((row) => row.toList()).toList();
+      final weights = mlr.weights;
 
       expect(weights[0][0], closeTo(2, 0.01));
       expect(weights[0][1], closeTo(3, 0.01));
@@ -221,6 +222,7 @@ void main() {
       expect(summary!['regressionStatistics']['standardError'], closeTo(6.27, 0.1));
 
       final vars = summary['variables'] as List;
+
       expect(vars[0]['coefficients'][0], closeTo(0.75, 0.01));
       expect(vars[0]['standardError'], closeTo(1.4, 0.01));
       expect(vars[0]['tStat'], closeTo(0.53, 0.01));

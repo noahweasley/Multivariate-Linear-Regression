@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'package:multivariate_linear_regression/multivariate_linear_regression.dart';
 
 void main() {
@@ -20,6 +21,5 @@ void main() {
     y: y,
   );
 
-  // ignore: avoid_print
   print(mlr.predict([3.0, 3.0]));
 }

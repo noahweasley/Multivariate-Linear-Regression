@@ -6,8 +6,8 @@ import 'package:multivariate_linear_regression/src/svd/svd.dart';
 
 /// Author: Ebenmelu Ifechukwu (@noahweasley)
 ///
-/// Multivariate linear regression implemented using Golub-Reinsch Singular Value Decomposition
-/// (SVD) to improve numerical stability.
+/// Multivariate linear regression implemented using Golub-Reinsch Singular Value Decomposition (SVD)
+/// to improve numerical stability.
 ///
 /// The regression solves the normal equation:
 ///
@@ -39,9 +39,8 @@ class MultivariateLinearRegression {
     _y = Matrix.fromList(y);
 
     if (intercept) {
-      final ones = Matrix.fromList(
-        List.generate(_x.rows, (_) => [1.0]),
-      );
+      final data = List.generate(_x.rows, (_) => [1.0]);
+      final ones = Matrix.fromList(data);
       _x = _x.appendColumn(ones);
     }
 

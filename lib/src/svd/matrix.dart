@@ -96,11 +96,6 @@ class Matrix {
   /// Returns the transpose of this matrix.
   ///
   /// If this matrix is `m × n`, the result is `n × m`.
-  ///
-  /// Transpose is essential for:
-  /// - Normal equations (`XᵀX`)
-  /// - SVD (`Uᵀ`, `Vᵀ`)
-  /// - Pseudoinverse (`V Σ⁺ Uᵀ`)
   Matrix transpose() {
     final t = Matrix.zeros(cols, rows);
 
@@ -245,5 +240,30 @@ class Matrix {
   /// ```
   Matrix neg() {
     return this.scale(-1.0);
+  }
+
+  /// Outputs a human-readable format
+  @override
+  String toString() {
+    final buffer = StringBuffer();
+
+    for (var i = 0; i < rows; i++) {
+      final rowString = _d[i].asMap().entries.map((entry) {
+        final colIndex = entry.key;
+        final value = entry.value.toStringAsFixed(2);
+
+        if (colIndex == 0) {
+          return '| $value';
+        } else if (colIndex == _d[i].length - 1) {
+          return '$value |';
+        }
+
+        return value;
+      }).join('\t');
+
+      buffer.writeln(rowString);
+    }
+
+    return buffer.toString();
   }
 }

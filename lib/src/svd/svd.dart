@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:multivariate_linear_regression/src/svd/matrix.dart';
 import 'package:multivariate_linear_regression/src/svd/svd_result.dart';
-import 'package:multivariate_linear_regression/src/svd/utils.dart';
+import 'package:multivariate_linear_regression/src/utils/utils.dart';
 import 'package:multivariate_linear_regression/src/utils/constants.dart';
 
 class GolubReinschSVD {
