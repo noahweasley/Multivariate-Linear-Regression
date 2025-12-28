@@ -1,7 +1,7 @@
 # Multivariate Linear Regression
 
 [![Style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-![Test Coverage](https://img.shields.io/badge/Test%20coverage-96%25-green)
+![Test Coverage](https://img.shields.io/badge/Test%20coverage-96.4%25-green)
 [![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)][mason_link]
 [![License: MIT][license_badge]][license_link]
 
@@ -116,7 +116,7 @@ On each pull request and push, the CI formats, lints, and tests the code.
 The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis rules.
 Code coverage is enforced using [Very Good Coverage][very_good_coverage_link].
 
-> **Note:** The coverage is currently at 96% due to a few small utility paths in SVD computations that are difficult to trigger via unit tests.
+> **Note:** The coverage is currently at 96.4% due to a few small utility paths in SVD computations that are difficult to trigger via unit tests.
 
 ---
 
