@@ -1,13 +1,26 @@
-// Irrelevant files and folders
+# Editor directories
 .vscode/
+.idea/
+*.iml
+
+# GitHub workflows
 .github/
+
+# Test and coverage
 test/
+coverage/
 coverage_badge.svg
+
+# Spell checker
 cspell.json
 
-# Files and directories created by pub
+# Build and pub artifacts
 .dart_tool/
 .packages
 build/
 pubspec.lock
-coverage/
+
+# Other generated files
+*.log
+*.tmp
+*.DS_Store

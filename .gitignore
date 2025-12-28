@@ -1,8 +1,20 @@
 # See https://www.dartlang.org/guides/libraries/private-files
 
-# Files and directories created by pub
+# Dart/Flutter build and pub artifacts
 .dart_tool/
 .packages
 build/
 pubspec.lock
 coverage/
+
+# Editor directories
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
