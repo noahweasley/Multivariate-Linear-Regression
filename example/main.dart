@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+
 import 'package:multivariate_linear_regression/multivariate_linear_regression.dart';
 
 void main() {
@@ -22,4 +23,15 @@ void main() {
   );
 
   print(mlr.predict([3.0, 3.0]));
+
+  print(mlr.predictBatch([
+    [1.0, 2.0],
+    [2.0, 3.0]
+  ]));
+
+  print(mlr.weights);
+  print(mlr.stdError);
+  print(mlr.stdErrors);
+  print(mlr.tStats);
+  print(mlr.toJson());
 }
