@@ -28,4 +28,3 @@ jobs:
       dart_sdk: "3.9.0"
       coverage: true
       min_coverage: 94
-
