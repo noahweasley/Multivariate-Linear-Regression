@@ -17,10 +17,6 @@ import 'package:multivariate_linear_regression/src/utils/utils.dart';
 /// - `U` is an `m × min(m, n)` matrix of left singular vectors
 /// - `Σ` is a diagonal matrix containing the singular values
 /// - `V` is an `n × n` matrix of right singular vectors
-///
-/// This implementation is numerically stable and suitable for
-/// least-squares problems, pseudo-inverse computation, and
-/// multivariate linear regression.
 class GolubReinschSVD {
   /// The result of the SVD computation.
   ///
