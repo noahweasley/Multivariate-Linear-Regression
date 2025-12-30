@@ -75,6 +75,7 @@ class Matrix {
     for (var i = 0; i < n; i++) {
       m._d[i][i] = 1.0;
     }
+
     return m;
   }
 

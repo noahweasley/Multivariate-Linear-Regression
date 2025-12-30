@@ -270,8 +270,9 @@ class GolubReinschSVD {
 
               for (var i = 0; i < n; i++) {
                 t = cs * V.get(i, j) + sn * V.get(i, p - 1);
-                V.set(i, p - 1, -sn * V.get(i, j) + cs * V.get(i, p - 1));
-                V.set(i, j, t);
+                V
+                  ..set(i, p - 1, -sn * V.get(i, j) + cs * V.get(i, p - 1))
+                  ..set(i, j, t);
               }
             }
             break;
@@ -293,8 +294,10 @@ class GolubReinschSVD {
 
               for (var i = 0; i < m; i++) {
                 t = cs * U.get(i, j) + sn * U.get(i, k - 1);
-                U.set(i, k - 1, -sn * U.get(i, j) + cs * U.get(i, k - 1));
-                U.set(i, j, t);
+
+                U
+                  ..set(i, k - 1, -sn * U.get(i, j) + cs * U.get(i, k - 1))
+                  ..set(i, j, t);
               }
             }
             break;
@@ -345,8 +348,10 @@ class GolubReinschSVD {
 
               for (var i = 0; i < n; i++) {
                 t = cs * V.get(i, j) + sn * V.get(i, j + 1);
-                V.set(i, j + 1, -sn * V.get(i, j) + cs * V.get(i, j + 1));
-                V.set(i, j, t);
+
+                V
+                  ..set(i, j + 1, -sn * V.get(i, j) + cs * V.get(i, j + 1))
+                  ..set(i, j, t);
               }
 
               t = hypotenuse(f, g);
@@ -364,8 +369,10 @@ class GolubReinschSVD {
               if (j < m - 1) {
                 for (var i = 0; i < m; i++) {
                   t = cs * U.get(i, j) + sn * U.get(i, j + 1);
-                  U.set(i, j + 1, -sn * U.get(i, j) + cs * U.get(i, j + 1));
-                  U.set(i, j, t);
+
+                  U
+                    ..set(i, j + 1, -sn * U.get(i, j) + cs * U.get(i, j + 1))
+                    ..set(i, j, t);
                 }
               }
             }
@@ -395,16 +402,20 @@ class GolubReinschSVD {
               if (k < n - 1) {
                 for (int i = 0; i < n; i++) {
                   t = V.get(i, k + 1);
-                  V.set(i, k + 1, V.get(i, k));
-                  V.set(i, k, t);
+
+                  V
+                    ..set(i, k + 1, V.get(i, k))
+                    ..set(i, k, t);
                 }
               }
 
               if (k < m - 1) {
                 for (var i = 0; i < m; i++) {
                   t = U.get(i, k + 1);
-                  U.set(i, k + 1, U.get(i, k));
-                  U.set(i, k, t);
+
+                  U
+                    ..set(i, k + 1, U.get(i, k))
+                    ..set(i, k, t);
                 }
               }
               k++;

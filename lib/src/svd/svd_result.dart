@@ -70,12 +70,12 @@ class SVDResult {
     final s = singularValues;
 
     final vrows = V.rows;
-    final Vcols = V.cols;
+    final vCols = V.cols;
 
     final X = Matrix.zeros(vrows, s.length);
 
     for (var i = 0; i < vrows; i++) {
-      for (var j = 0; j < Vcols; j++) {
+      for (var j = 0; j < vCols; j++) {
         if (s[j].abs() > e) {
           X.set(i, j, V.get(i, j) / s[j]);
         }
@@ -83,16 +83,16 @@ class SVDResult {
     }
 
     final U = leftSingleVectors;
-    final Urows = U.rows;
-    final Ucols = U.cols;
+    final uRows = U.rows;
+    final uCols = U.cols;
 
-    final Y = Matrix.zeros(vrows, Urows);
+    final Y = Matrix.zeros(vrows, uRows);
 
     for (var i = 0; i < vrows; i++) {
-      for (var j = 0; j < Urows; j++) {
+      for (var j = 0; j < uRows; j++) {
         var sum = 0.0;
 
-        for (var k = 0; k < Ucols; k++) {
+        for (var k = 0; k < uCols; k++) {
           sum += X.get(i, k) * U.get(j, k);
         }
 
