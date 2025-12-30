@@ -78,6 +78,17 @@ class Matrix {
     return m;
   }
 
+  /// Creates a diagonal matrix from a list of values.
+  factory Matrix.diag(List<double> values) {
+    final D = Matrix.zeros(values.length, values.length);
+
+    for (var i = 0; i < values.length; i++) {
+      D._d[i][i] = values[i];
+    }
+
+    return D;
+  }
+
   /// Returns the element at row `r`, column `c`.
   double get(int r, int c) => _d[r][c];
 
@@ -172,17 +183,6 @@ class Matrix {
     }
 
     return C;
-  }
-
-  /// Creates a diagonal matrix from a list of values.
-  static Matrix diag(List<double> values) {
-    final D = Matrix.zeros(values.length, values.length);
-
-    for (var i = 0; i < values.length; i++) {
-      D._d[i][i] = values[i];
-    }
-
-    return D;
   }
 
   /// Extracts the main diagonal as a list.
