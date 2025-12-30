@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs
 import 'dart:math';
 
+/// Author: Ebenmelu Ifechukwu (@noahweasley)
+///
+/// Calculates hypotenuse
 double hypotenuse(double a, double b) {
   if (a.abs() > b.abs()) {
     final r = b / a;

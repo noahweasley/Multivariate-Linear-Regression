@@ -1,3 +1,5 @@
+/// Author: Ebenmelu Ifechukwu (@noahweasley)
+///
 /// A lightweight 2D matrix implementation designed specifically for
 /// multivariate linear regression and SVD-based pseudoinverse.
 ///

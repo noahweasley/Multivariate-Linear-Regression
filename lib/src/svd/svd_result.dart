@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:multivariate_linear_regression/src/svd/matrix.dart';
 import 'package:multivariate_linear_regression/src/utils/constants.dart';
 
+/// Author: Ebenmelu Ifechukwu (@noahweasley)
+///
 /// Holds the result of a Singular Value Decomposition (SVD).
 class SVDResult {
   /// Creates an immutable container for the result of a

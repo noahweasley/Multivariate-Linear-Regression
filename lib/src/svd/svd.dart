@@ -6,6 +6,8 @@ import 'package:multivariate_linear_regression/src/svd/svd_result.dart';
 import 'package:multivariate_linear_regression/src/utils/constants.dart';
 import 'package:multivariate_linear_regression/src/utils/utils.dart';
 
+/// Author: Ebenmelu Ifechukwu (@noahweasley)
+///
 /// Computes the Singular Value Decomposition (SVD) of a matrix using the
 /// Golub–Reinsch algorithm.
 ///
