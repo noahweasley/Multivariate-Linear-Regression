@@ -167,7 +167,7 @@ class MultivariateLinearRegression {
   ///   (number_of_rows - number_of_columns)
   double _computeVariance() {
     final fitted = _x.multiply(_beta);
-    final residuals = _y.clone().add(fitted.neg());
+    final residuals = _y.add(fitted.neg());
 
     return residuals.toList().fold(0.0, (result, residual) => result + pow(residual[0], 2)) / (_y.rows - _x.cols);
   }

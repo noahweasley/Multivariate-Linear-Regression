@@ -18,18 +18,18 @@ void main() {
         [5, 6],
       ]);
 
-      final AInverse = A.pseudoInverse();
+      final aInverse = A.pseudoInverse();
 
-      expect(AInverse.rows, equals(2));
-      expect(AInverse.cols, equals(3));
+      expect(aInverse.rows, equals(2));
+      expect(aInverse.cols, equals(3));
 
       // Moore–Penrose
-      final reconstructed = AInverse.multiply(A).multiply(AInverse);
+      final reconstructed = aInverse.multiply(A).multiply(aInverse);
 
-      for (var i = 0; i < AInverse.rows; i++) {
-        for (var j = 0; j < AInverse.cols; j++) {
+      for (var i = 0; i < aInverse.rows; i++) {
+        for (var j = 0; j < aInverse.cols; j++) {
           expect(
-            (reconstructed.get(i, j) - AInverse.get(i, j)).abs() < 1e-10,
+            (reconstructed.get(i, j) - aInverse.get(i, j)).abs() < 1e-10,
             isTrue,
           );
         }
@@ -39,10 +39,10 @@ void main() {
     // TODO: Fix test case
     test('empty matrix returns transpose', () {
       final A = Matrix.zeros(0, 0);
-      final AInverse = A.pseudoInverse();
+      final aInverse = A.pseudoInverse();
 
-      expect(AInverse.rows, equals(0));
-      expect(AInverse.cols, equals(0));
+      expect(aInverse.rows, equals(0));
+      expect(aInverse.cols, equals(0));
     });
 
     test('rank-deficient matrix zeroes small singular values', () {
@@ -53,15 +53,15 @@ void main() {
         [3, 6],
       ]);
 
-      final AInverse = A.pseudoInverse(threshold: 1e-8);
+      final aInverse = A.pseudoInverse(threshold: 1e-8);
 
       // Moore–Penrose
-      final reconstructed = AInverse.multiply(A).multiply(AInverse);
+      final reconstructed = aInverse.multiply(A).multiply(aInverse);
 
-      for (var i = 0; i < AInverse.rows; i++) {
-        for (var j = 0; j < AInverse.cols; j++) {
+      for (var i = 0; i < aInverse.rows; i++) {
+        for (var j = 0; j < aInverse.cols; j++) {
           expect(
-            (reconstructed.get(i, j) - AInverse.get(i, j)).abs() < 1e-8,
+            (reconstructed.get(i, j) - aInverse.get(i, j)).abs() < 1e-8,
             isTrue,
           );
         }

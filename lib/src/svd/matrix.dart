@@ -54,10 +54,6 @@ class Matrix {
   }
 
   /// Creates an `r × c` matrix filled with zeros.
-  ///
-  /// Commonly used to:
-  /// - initialize result matrices
-  /// - build identity or diagonal matrices
   factory Matrix.zeros(int r, int c) {
     return Matrix._(
       List.generate(r, (_) => List.filled(c, 0.0)),

@@ -63,8 +63,7 @@ void main() {
     });
 
     test('get and set', () {
-      final A = Matrix.zeros(2, 2);
-      A.set(0, 1, 42);
+      final A = Matrix.zeros(2, 2)..set(0, 1, 42);
       expect(A.get(0, 1), 42);
     });
 
