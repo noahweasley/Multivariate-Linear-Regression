@@ -1,3 +1,7 @@
+## 0.1.1+1
+
+- Update docs to use real mathematical expressions
+
 ## 0.1.1
 
 - Fix analyzer issues
