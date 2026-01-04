@@ -6,17 +6,15 @@ import 'package:multivariate_linear_regression/src/svd/svd.dart';
 
 /// Author: Ebenmelu Ifechukwu (@noahweasley)
 ///
-/// Multivariate linear regression implemented using Golub-Reinsch Singular Value Decomposition (SVD)
-/// to improve numerical stability.
+/// Multivariate linear regression using Golub–Reinsch Singular Value Decomposition (SVD).
 ///
-/// The regression solves the normal equation:
+/// Normal equation:
+///   β = (XᵀX)⁻¹ XᵀY
 ///
-///   beta = inverse(transpose(X) * X) * transpose(X) * Y
-///
-/// where:
-/// - X is the input (design) matrix
-/// - Y is the output matrix
-/// - beta is the coefficient matrix
+/// Where:
+/// - X: design matrix
+/// - Y: target matrix
+/// - β: coefficient matrix
 class MultivariateLinearRegression {
   /// Creates a multivariate linear regression model.
   ///
@@ -66,51 +64,55 @@ class MultivariateLinearRegression {
     );
   }
 
-  /// Design matrix X
+  /// Design matrix (X)
   late Matrix _x;
 
-  /// Output matrix Y
+  /// Output matrix (Y)
   late Matrix _y;
 
-  /// Coefficient matrix beta
+  /// Coefficient matrix (β)
   late Matrix _beta;
 
-  /// Number of input features
+  /// Number of input features (p)
   late int _inputs;
 
-  /// Number of output variables
+  /// Number of output variables (k)
   late int _outputs;
 
-  /// Residual variance
+  /// Residual variance (σ²)
   double? _variance;
 
-  /// Original input data
+  /// Original input data (X)
   late List<List<double>> _originalX;
 
-  /// Original output data
+  /// Original output data (Y)
   late List<List<double>> _originalY;
 
-  /// Whether an intercept column is used
+  /// Whether an intercept column is included
   final bool intercept;
 
-  /// Whether statistics are computed
+  /// Whether regression statistics are computed
   final bool statistics;
 
-  /// Number of input features
+  /// Number of input features (p)
   int get inputs => _inputs;
 
-  /// Number of output variables
+  /// Number of output variables (k)
   int get outputs => _outputs;
 
-  /// Regression coefficients
+  /// Regression coefficients (β)
   List<List<double>> get weights => _beta.toList();
 
   /// Standard error of the regression
+  ///
+  /// Formula:
+  ///   σ = √σ²
   double? get stdError => _variance == null ? null : sqrt(_variance!);
 
-  /// Covariance matrix of coefficients
+  /// Computes the covariance matrix of the coefficients.
   ///
-  /// cov(beta) = variance * inverse(transpose(X) * X)
+  /// Formula:
+  ///   `Cov(β) = σ² · (XᵀX)⁻¹`
   ///
   /// Throws StateError if statistics are disabled.
   Matrix get stdErrorMatrix {
@@ -122,12 +124,16 @@ class MultivariateLinearRegression {
     return xtxInv.scale(_variance!);
   }
 
-  /// Standard error for each coefficient
+  /// Computes standard errors for each coefficient.
+  ///
+  /// Formula:
+  ///   `SE(βᵢ) = √Cov(βᵢ, βᵢ)`
   List<double> get stdErrors => stdErrorMatrix.diagonal().map(sqrt).toList();
 
-  /// t-statistics for each coefficient
+  /// Computes t-statistics for each coefficient.
   ///
-  /// t = beta / standard_error
+  /// Formula:
+  ///  `t = β / SE(β)`
   List<double> get tStats {
     final errors = stdErrors;
     final coefficient = weights;
@@ -140,13 +146,14 @@ class MultivariateLinearRegression {
 
   /// Computes regression coefficients.
   ///
-  /// Steps:
-  /// 1. Xt  = transpose(X)
-  /// 2. XtX = Xt * X
-  /// 3. XtY = Xt * Y
-  /// 4. beta = inverse(XtX) * XtY
+  /// Formula:
+  ///   `β = (XᵀX)⁻¹ XᵀY`
   ///
-  /// The inverse is computed using SVD.
+  /// Where:
+  /// - `X`is the feature matrix
+  /// - `Y` is the target matrix
+  /// - `β` is the coefficient matrix
+  /// - `(XᵀX)⁻¹` is computed using SVD
   Matrix _computeBeta() {
     final xt = _x.transpose();
     final xx = xt.multiply(_x);
@@ -160,11 +167,15 @@ class MultivariateLinearRegression {
 
   /// Computes residual variance.
   ///
-  /// residual = actual - predicted
+  /// Residuals:
+  ///   r = Y − Xβ
   ///
-  /// variance =
-  ///   sum(residual * residual) /
-  ///   (number_of_rows - number_of_columns)
+  /// Variance:
+  ///   σ² = Σ(rᵢ²) / (n − p)
+  ///
+  /// Where:
+  /// - n = number of rows in Y
+  /// - p = number of columns in X
   double _computeVariance() {
     final fitted = _x.multiply(_beta);
     final residuals = _y.add(fitted.neg());
