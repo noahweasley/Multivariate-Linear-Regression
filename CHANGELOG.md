@@ -1,3 +1,11 @@
+## 0.1.1+2
+
+* Improve documentation; making API overview better and added Support section
+
+## 0.1.1+1
+
+- Update docs to use real mathematical expressions
+
 ## 0.1.1
 
 - Fix analyzer issues

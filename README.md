@@ -62,49 +62,95 @@ void main() {
 
 ## API Overview
 
-- `MultivariateLinearRegression({x, y, intercept = true, statistics = true})`
+### Constructor
 
-  - Creates a regression model.
-  - `x`: List of input rows.
-  - `y`: List of output rows.
-  - `intercept`: Whether to include an intercept column.
-  - `statistics`: Whether to compute variance, standard errors, and t-stats.
+```dart
+MultivariateLinearRegression({
+  required List<List<double>> x,
+  required List<List<double>> y,
+  bool intercept = true,
+  bool statistics = true,
+})
+```
 
-- `MultivariateLinearRegression.load(model)`
+Creates a multivariate linear regression model.
 
-  - Recreates a model using the original training data.
+- `x` - Input feature matrix (rows = samples, columns = features)
+- `y` — Output matrix (rows = samples, columns = targets)
+- `intercept` — Includes a bias (intercept) term when set to `true`
+- `statistics` — Enables computation of additional metrics (standard errors, t-stats, etc.)
 
-- `predict(List<double> x)`
+---
 
-  - Predicts outputs for a single input vector.
+### Load Existing Model
 
-- `predictBatch(List<List<double>> x)`
+```dart
+factory MultivariateLinearRegression.load(MultivariateLinearRegression model)
+```
 
-  - Predicts outputs for multiple input rows.
+Reconstructs a trained model from previously trained model
 
-- `weights`
+---
 
-  - Returns the regression coefficients.
+### Prediction
 
-- `stdError`
+```dart
+List<double> predict(List<double> input)
+```
 
-  - Standard error of the regression.
+Returns predicted outputs for a single input vector.
 
-- `stdErrors`
+```dart
+List<List<double>> predictBatch(List<List<double>> inputs)
+```
 
-  - Standard error for each coefficient.
+Returns predictions for multiple input rows.
 
-- `tStats`
+---
 
-  - t-statistics for each coefficient.
+### Coefficients & Metrics
 
-- `stdErrorMatrix`
+```dart
+List<List<double>> get weights
+```
 
-  - Covariance matrix of coefficients (requires `statistics = true`).
+Matrix of regression coefficients (includes intercept if enabled).
 
-- `toJson()`
+```dart
+double get stdError
+```
 
-  - Converts the model to a JSON-compatible map, including regression statistics if enabled.
+Overall standard error of the model.
+
+```dart
+List<List<double>> get stdErrors
+```
+
+Standard error for each coefficient.
+
+```dart
+List<List<double>> get tStats
+```
+
+T-statistics corresponding to each coefficient.
+
+```dart
+List<List<double>> get stdErrorMatrix
+```
+
+Covariance matrix of the coefficients.
+
+> Available only when `statistics = true`
+
+---
+
+### Serialization
+
+```dart
+Map<String, dynamic> toJson()
+```
+
+Serializes the model into a JSON-compatible format, including statistics when enabled.
 
 ---
 
@@ -115,8 +161,6 @@ Multivariate Linear Regression comes with a built-in [GitHub Actions workflow][g
 On each pull request and push, the CI formats, lints, and tests the code.
 The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis rules.
 Code coverage is enforced using [Very Good Coverage][very_good_coverage_link].
-
-> **Note:** The coverage is currently at 96.4% due to a few small utility paths in SVD computations that are difficult to trigger via unit tests.
 
 ---
 
@@ -138,6 +182,15 @@ open coverage/index.html
 ```
 
 ---
+
+## Support
+
+If you find this package useful, please consider supporting it:
+
+- Like the [package on pub.dev](https://pub.dev/packages/multivariate_linear_regression)
+- Star the [GitHub repository](https://github.com/noahweasley/Multivariate-Linear-Regression)
+
+Your support helps improve the project and keeps it actively maintained 😊
 
 [dart_install_link]: https://dart.dev/get-dart
 [github_actions_link]: https://docs.github.com/en/actions/learn-github-actions
