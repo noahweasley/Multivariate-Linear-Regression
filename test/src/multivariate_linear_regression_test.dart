@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:multivariate_linear_regression/multivariate_linear_regression.dart';
-import 'package:multivariate_linear_regression/src/utils/typedefs.dart' show MLR;
 import 'package:test/test.dart';
 
 import '../data/x02.dart';
