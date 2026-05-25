@@ -1,7 +1,7 @@
 # Multivariate Linear Regression
 
 [Style: very good analysis][very_good_analysis_link]
-![Test Coverage](https://img.shields.io/badge/Test%20coverage-98.7%25-green)
+![Test Coverage](https://img.shields.io/badge/Test%20coverage-96.8%25-green)
 [Powered by Mason][mason_link]
 [License: MIT][license_link]
 
@@ -186,6 +186,7 @@ dart run coverage:format_coverage \
   --packages=.dart_tool/package_config.json
 
 lcov --remove coverage/lcov.info \
+    --ignore-errors unused \
   '*/.pub-cache/*' \
   -o coverage/filtered.info
 ```
