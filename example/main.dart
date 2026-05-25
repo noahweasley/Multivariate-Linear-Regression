@@ -22,6 +22,12 @@ void main() {
     y: y,
   );
 
+   // Or:
+   //   final mlr = MLR(
+   //     x: x,
+   //     y: y,
+   //   );
+
   print(mlr.predict([3.0, 3.0]));
 
   print(mlr.predictBatch([

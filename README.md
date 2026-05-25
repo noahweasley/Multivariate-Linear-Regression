@@ -1,9 +1,9 @@
 # Multivariate Linear Regression
 
-[![Style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-![Test Coverage](https://img.shields.io/badge/Test%20coverage-96.4%25-green)
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)][mason_link]
-[![License: MIT][license_badge]][license_link]
+[Style: very good analysis][very_good_analysis_link]
+![Test Coverage](https://img.shields.io/badge/Test%20coverage-98.7%25-green)
+[Powered by Mason][mason_link]
+[License: MIT][license_link]
 
 Multivariate linear regression for Dart with support for multiple outputs and optional intercept, implemented using Golub-Reinsch Singular Value Decomposition.
 
@@ -47,6 +47,12 @@ void main() {
     x: x,
     y: y,
   );
+
+   // OR
+   //   final mlr = MLR(
+   //     x: x,
+   //     y: y,
+   //   );
 
   print(mlr.predict([3.0, 3.0]));
   print(mlr.predictBatch([[1.0, 2.0], [2.0, 3.0]]));
@@ -170,14 +176,24 @@ To run all unit tests and generate coverage:
 
 ```sh
 dart pub global activate coverage 1.15.0
+
 dart test --coverage=coverage
-dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info
+
+dart run coverage:format_coverage \
+  --lcov \
+  --in=coverage \
+  --out=coverage/lcov.info \
+  --packages=.dart_tool/package_config.json
+
+lcov --remove coverage/lcov.info \
+  '*/.pub-cache/*' \
+  -o coverage/filtered.info
 ```
 
 To view the coverage report using lcov:
 
 ```sh
-genhtml coverage/lcov.info -o coverage/
+genhtml coverage/filtered.info -o coverage/
 open coverage/index.html
 ```
 
