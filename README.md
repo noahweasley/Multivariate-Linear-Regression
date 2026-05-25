@@ -1,9 +1,9 @@
 # Multivariate Linear Regression
 
-[![Style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
+[Style: very good analysis][very_good_analysis_link]
 ![Test Coverage](https://img.shields.io/badge/Test%20coverage-98.7%25-green)
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)][mason_link]
-[![License: MIT][license_badge]][license_link]
+[Powered by Mason][mason_link]
+[License: MIT][license_link]
 
 Multivariate linear regression for Dart with support for multiple outputs and optional intercept, implemented using Golub-Reinsch Singular Value Decomposition.
 
@@ -81,7 +81,7 @@ MultivariateLinearRegression({
 
 Creates a multivariate linear regression model.
 
-- `x` - Input feature matrix (rows = samples, columns = features)
+- `x` — Input feature matrix (rows = samples, columns = features)
 - `y` — Output matrix (rows = samples, columns = targets)
 - `intercept` — Includes a bias (intercept) term when set to `true`
 - `statistics` — Enables computation of additional metrics (standard errors, t-stats, etc.)
