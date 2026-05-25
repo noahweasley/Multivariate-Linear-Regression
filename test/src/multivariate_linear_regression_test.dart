@@ -305,5 +305,25 @@ void main() {
         [4, 6, 5],
       );
     });
+
+    test('forces SVD edge-case execution paths', () {
+      final X = [
+        [1e-10, 1e-10],
+        [1e-10, 2e-10],
+        [2e-10, 3e-10],
+      ];
+
+      final Y = [
+        [1.0],
+        [2.0],
+        [3.0],
+      ];
+
+      final mlr = MultivariateLinearRegression(x: X, y: Y);
+
+      final result = mlr.predict([1e-10, 2e-10]);
+
+      expect(result.first.isFinite, true);
+    });
   });
 }
