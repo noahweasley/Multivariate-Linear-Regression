@@ -4,6 +4,7 @@ import 'package:multivariate_linear_regression/src/svd/matrix.dart';
 import 'package:multivariate_linear_regression/src/svd/pseudo_inverse.dart';
 import 'package:multivariate_linear_regression/src/svd/svd.dart';
 
+/// {@template multivariate_linear_regression}
 /// Author: Ebenmelu Ifechukwu (@noahweasley)
 ///
 /// Multivariate linear regression using Golub–Reinsch Singular Value Decomposition (SVD).
@@ -15,6 +16,7 @@ import 'package:multivariate_linear_regression/src/svd/svd.dart';
 /// - X: design matrix
 /// - Y: target matrix
 /// - β: coefficient matrix
+/// {@endtemplate}
 class MultivariateLinearRegression {
   /// Creates a multivariate linear regression model.
   ///

@@ -1,6 +1,10 @@
+## 0.2.0
+
+- Add `MLR` alias for `MultivariateLinearRegression`
+
 ## 0.1.1+2
 
-* Improve documentation; making API overview better and added Support section
+- Improve documentation; making API overview better and added Support section
 
 ## 0.1.1+1
 

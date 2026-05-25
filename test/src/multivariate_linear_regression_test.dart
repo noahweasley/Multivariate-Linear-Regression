@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:multivariate_linear_regression/multivariate_linear_regression.dart';
+import 'package:multivariate_linear_regression/src/utils/typedefs.dart' show MLR;
 import 'package:test/test.dart';
 
 import '../data/x02.dart';
@@ -278,6 +279,32 @@ void main() {
       final mlr = MultivariateLinearRegression(x: X, y: Y);
 
       expect(() => mlr.predict([3]), throwsArgumentError);
+    });
+
+    test('MLR typedef aliases MultivariateLinearRegression', () {
+      final mlr = MLR(
+        x: [
+          [0, 0],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+        ],
+        y: [
+          [0, 0, 0],
+          [2, 4, 3],
+          [4, 6, 5],
+          [6, 8, 7],
+        ],
+      );
+
+      final prediction = mlr.predict([2, 3]);
+
+      expect(mlr, isA<MultivariateLinearRegression>());
+
+      expect(
+        prediction.map((e) => e.round()).toList(),
+        [4, 6, 5],
+      );
     });
   });
 }
