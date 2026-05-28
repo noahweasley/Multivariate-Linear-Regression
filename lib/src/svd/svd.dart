@@ -1,3 +1,4 @@
+// Ignored because GolubReinschSVD.decompose() constructor is always used instead
 // ignore_for_file: sort_constructors_first
 import 'dart:math';
 
