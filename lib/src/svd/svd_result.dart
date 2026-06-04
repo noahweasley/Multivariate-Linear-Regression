@@ -15,7 +15,7 @@ class SVDResult {
   /// `A = U * Σ * Vᵀ`
   ///
   /// where:
-  /// - [leftSingleVectors] (`U`) contains the left singular vectors
+  /// - [leftSingularVectors] (`U`) contains the left singular vectors
   /// - [rightSingularVectors] (`V`) contains the right singular vectors
   /// - [singularValues] contains the diagonal values of `Σ` in
   ///   descending order
@@ -24,7 +24,7 @@ class SVDResult {
   ///
   /// All inputs are assumed to be valid and dimensionally consistent.
   SVDResult({
-    required this.leftSingleVectors,
+    required this.leftSingularVectors,
     required this.rightSingularVectors,
     required this.singularValues,
     required this.rows,
@@ -32,7 +32,7 @@ class SVDResult {
   });
 
   /// Left singular vectors (m × n)
-  final Matrix leftSingleVectors;
+  final Matrix leftSingularVectors;
 
   /// Right singular vectors (n × n)
   final Matrix rightSingularVectors;
@@ -99,7 +99,7 @@ class SVDResult {
       }
     }
 
-    final U = leftSingleVectors;
+    final U = leftSingularVectors;
     final uRows = U.rows;
     final uCols = U.cols;
 

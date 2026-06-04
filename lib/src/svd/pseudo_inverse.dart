@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:multivariate_linear_regression/src/svd/matrix.dart';
 import 'package:multivariate_linear_regression/src/svd/svd.dart';
 
@@ -19,7 +17,7 @@ extension MatrixPseudoInverse on Matrix {
     final svd = GolubReinschSVD.decompose(this);
     final results = svd.results;
 
-    final U = results.leftSingleVectors;
+    final U = results.leftSingularVectors;
     final V = results.rightSingularVectors;
     final s = results.singularValues;
 

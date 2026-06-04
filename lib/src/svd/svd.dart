@@ -461,7 +461,7 @@ class GolubReinschSVD {
     final results = SVDResult(
       rows: m,
       cols: n,
-      leftSingleVectors: U,
+      leftSingularVectors: U,
       rightSingularVectors: V,
       singularValues: s,
     );

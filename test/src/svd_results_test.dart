@@ -13,7 +13,7 @@ void main() {
 
       final svd = GolubReinschSVD.decompose(A).results;
 
-      final U = svd.leftSingleVectors;
+      final U = svd.leftSingularVectors;
       final S = svd.diagonalMatrix;
       final V = svd.rightSingularVectors;
 
