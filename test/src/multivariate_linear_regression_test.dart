@@ -1,3 +1,4 @@
+// Ignored for json usage
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:multivariate_linear_regression/multivariate_linear_regression.dart';

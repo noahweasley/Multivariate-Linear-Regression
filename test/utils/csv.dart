@@ -1,9 +1,8 @@
-// ignore_for_file: public_member_api_docs
-
 import 'dart:io';
 
 import 'package:csv/csv.dart';
 
+// Read CSV file and convert to a matrix
 List<List<double>> readCsv(String path) {
   final content = File(path).readAsStringSync();
 
