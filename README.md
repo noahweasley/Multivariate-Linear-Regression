@@ -104,6 +104,17 @@ Reconstructs a trained model from previously trained model
 
 ---
 
+### Fitting
+
+```dart
+void fit({required List<List<double>> x, required List<List<double>> y})
+```
+
+Fits the model to the provided training data.
+Can be used to fit a new model or refit an existing model with new data.
+
+---
+
 ### Prediction
 
 ```dart
