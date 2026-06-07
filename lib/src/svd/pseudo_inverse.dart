@@ -5,7 +5,7 @@ import 'package:multivariate_linear_regression/src/svd/svd.dart';
 extension MatrixPseudoInverse on Matrix {
   /// Moore–Penrose pseudoinverse using **Golub–Reinsch SVD**.
   ///
-  /// This matches **ml-matrix** and LAPACK behavior:
+  /// This matches LAPACK behavior:
   ///   A⁺ = V Σ⁺ Uᵀ
   Matrix pseudoInverse({
     double threshold = double.minPositive,

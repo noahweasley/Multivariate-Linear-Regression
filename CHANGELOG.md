@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Add `fit()` method as an alternative to initializing the design and target matrices in the constructor. Useful if refitting an already existing model is needed
+
 ## 0.2.0
 
 - Add `MLR` alias for `MultivariateLinearRegression`

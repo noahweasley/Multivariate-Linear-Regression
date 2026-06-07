@@ -9,7 +9,6 @@
 /// Design goals:
 /// - Supports rectangular (m × n) matrices
 /// - No assumption of squareness
-/// - JS `ml-matrix` parity
 class Matrix {
   /// Internal constructor.
   ///

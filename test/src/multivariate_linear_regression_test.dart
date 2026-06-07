@@ -326,5 +326,343 @@ void main() {
 
       expect(result.first.isFinite, true);
     });
+
+    test('can fit model when x and y are not provided in constructor', () {
+      final mlr = MLR()
+        ..fit(
+          x: [
+            [0, 0],
+            [1, 2],
+            [2, 3],
+            [3, 4],
+          ],
+          y: [
+            [0, 0, 0],
+            [2, 4, 3],
+            [4, 6, 5],
+            [6, 8, 7],
+          ],
+        );
+
+      final p = mlr.predict([2, 3]).map((e) => e.round()).toList();
+      expect(p, [4, 6, 5]);
+    });
+  });
+
+  test('throws when fitting with mismatched x and y lengths', () {
+    final mlr = MLR();
+
+    expect(
+      () => mlr.fit(
+        x: [
+          [0, 0],
+          [1, 2],
+        ],
+        y: [
+          [0, 0, 0],
+        ],
+      ),
+      throwsArgumentError,
+    );
+  });
+
+  test('throws when fitting with jagged x', () {
+    final mlr = MLR();
+
+    expect(
+      () => mlr.fit(
+        x: [
+          [0, 0],
+          [1, 2, 3],
+        ],
+        y: [
+          [0, 0, 0],
+          [2, 4, 3],
+        ],
+      ),
+      throwsArgumentError,
+    );
+  });
+
+  test('throws when fitting with jagged y', () {
+    final mlr = MLR();
+
+    expect(
+      () => mlr.fit(
+        x: [
+          [0, 0],
+          [1, 2],
+        ],
+        y: [
+          [0, 0, 0],
+          [2, 4],
+        ],
+      ),
+      throwsArgumentError,
+    );
+  });
+
+  test('throws when predicting with wrong input size', () {
+    final mlr = MLR(
+      x: [
+        [0, 0],
+        [1, 2],
+        [2, 3],
+        [3, 4],
+      ],
+      y: [
+        [0, 0, 0],
+        [2, 4, 3],
+        [4, 6, 5],
+        [6, 8, 7],
+      ],
+    );
+
+    expect(() => mlr.predict([1]), throwsArgumentError);
+    expect(() => mlr.predict([1, 2, 3]), throwsArgumentError);
+  });
+
+  test('throws when predict is called before fitting', () {
+    final mlr = MLR();
+
+    expect(() => mlr.predict([1, 2]), throwsArgumentError);
+  });
+
+  test('predictBatch returns predictions for all rows', () {
+    final mlr = MLR(
+      x: [
+        [0, 0],
+        [1, 2],
+        [2, 3],
+        [3, 4],
+      ],
+      y: [
+        [0],
+        [2],
+        [4],
+        [6],
+      ],
+    );
+
+    final predictions = mlr.predictBatch([
+      [2, 3],
+      [3, 4],
+    ]);
+
+    expect(predictions.length, 2);
+    expect(predictions[0][0], closeTo(4, 0.01));
+    expect(predictions[1][0], closeTo(6, 0.01));
+  });
+
+  test('stdError is null when statistics are disabled', () {
+    final mlr = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+      ],
+      statistics: false,
+    );
+
+    expect(mlr.stdError, isNull);
+  });
+
+  test('stdErrorMatrix throws when statistics are disabled', () {
+    final mlr = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+      ],
+      statistics: false,
+    );
+
+    expect(
+      () => mlr.stdErrorMatrix,
+      throwsStateError,
+    );
+  });
+
+  test('stdErrors returns one value per coefficient', () {
+    final mlr = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+        [4],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+        [8],
+      ],
+    );
+
+    expect(mlr.stdErrors.length, mlr.weights.length);
+  });
+
+  test('tStats returns one value per coefficient', () {
+    final mlr = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+        [4],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+        [8],
+      ],
+    );
+
+    expect(mlr.tStats.length, mlr.weights.length);
+  });
+
+  test('weights are empty before fitting', () {
+    final mlr = MLR();
+
+    expect(mlr.weights, isEmpty);
+  });
+
+  test('inputs and outputs are zero before fitting', () {
+    final mlr = MLR();
+
+    expect(mlr.inputs, 0);
+    expect(mlr.outputs, 0);
+  });
+
+  test('load preserves configuration flags', () {
+    final original = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+      ],
+      intercept: false,
+      statistics: false,
+    );
+
+    final loaded = MLR.load(original);
+
+    expect(loaded.intercept, false);
+    expect(loaded.statistics, false);
+  });
+
+  test('toJson exposes expected top level fields', () {
+    final mlr = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+      ],
+    );
+
+    final json = mlr.toJson();
+
+    expect(json['name'], 'multivariateLinearRegression');
+    expect(json['weights'], isNotNull);
+    expect(json['inputs'], 1);
+    expect(json['outputs'], 1);
+    expect(json['intercept'], true);
+  });
+
+  test('predict works for model without intercept', () {
+    final mlr = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+      ],
+      intercept: false,
+    );
+
+    final prediction = mlr.predict([5]);
+
+    expect(prediction[0], closeTo(10, 0.01));
+  });
+
+  test('refit replaces previously learned coefficients', () {
+    final mlr = MLR(
+      x: [
+        [1],
+        [2],
+        [3],
+      ],
+      y: [
+        [2],
+        [4],
+        [6],
+      ],
+    );
+
+    final firstPrediction = mlr.predict([5])[0];
+
+    mlr.fit(
+      x: [
+        [1],
+        [2],
+        [3],
+      ],
+      y: [
+        [3],
+        [6],
+        [9],
+      ],
+    );
+
+    final secondPrediction = mlr.predict([5])[0];
+
+    expect(firstPrediction, isNot(closeTo(secondPrediction, 0.01)));
+    expect(secondPrediction, closeTo(15, 0.01));
+  });
+
+  test('stdError is computed when statistics are enabled', () {
+    final mlr = MLR(
+      x: [
+        [3, 1],
+        [4, 2],
+        [10, 3],
+        [6, 4],
+        [7, 5],
+      ],
+      y: [
+        [19],
+        [28],
+        [37],
+        [46],
+        [40],
+      ],
+    );
+
+    expect(mlr.stdError, isNotNull);
+    expect(mlr.stdError! > 0, true);
   });
 }

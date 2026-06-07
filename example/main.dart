@@ -23,11 +23,17 @@ void main() {
     y: y,
   );
 
-  // Or:
-  //   final mlr = MLR(
-  //     x: x,
-  //     y: y,
-  //   );
+  // OR
+  // final mlr1 = MultivariateLinearRegression()..fit(x: x, y: y);
+
+  // OR
+  // final mlr2 = MLR(
+  //   x: x,
+  //   y: y,
+  // );
+
+  // OR
+  // final ml3 = MLR()..fit(x: x, y: y);
 
   print(mlr.predict([3.0, 3.0]));
 

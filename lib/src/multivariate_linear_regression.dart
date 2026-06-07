@@ -19,37 +19,33 @@ import 'package:multivariate_linear_regression/src/svd/svd.dart';
 class MultivariateLinearRegression {
   /// Creates a multivariate linear regression model.
   ///
-  /// x: input matrix with shape (rows x features)
-  /// y: output matrix with shape (rows x outputs)
+  /// [x] is the input matrix with shape `(rows × features)`.
   ///
-  /// If intercept is true, a column of ones is appended to X.
-  /// If statistics is true, variance and inference statistics
-  /// are computed.
+  /// [y] is the output matrix with shape `(rows × outputs)`.
+  ///
+  /// Both [x] and [y] must be provided together. If either is
+  /// specified, the other must also be specified. Alternatively,
+  /// both may be omitted to create an untrained model.
+  ///
+  /// If [intercept] is `true`, a column of ones is added to the
+  /// feature matrix before fitting.
+  ///
+  /// If [statistics] is `true`, additional regression statistics,
+  /// such as variance estimates and inference metrics, are computed.
+  ///
+  /// When both [x] and [y] are provided, the model is fitted
+  /// immediately by calling [fit].
   MultivariateLinearRegression({
-    required List<List<double>> x,
-    required List<List<double>> y,
+    List<List<double>>? x,
+    List<List<double>>? y,
     this.intercept = true,
     this.statistics = true,
-  }) {
-    _originalX = x;
-    _originalY = y;
-
-    _x = Matrix.fromList(x);
-    _y = Matrix.fromList(y);
-
-    if (intercept) {
-      final data = List.generate(_x.rows, (_) => [1.0]);
-      final ones = Matrix.fromList(data);
-      _x = _x.appendColumn(ones);
-    }
-
-    _inputs = _x.cols - (intercept ? 1 : 0);
-    _outputs = _y.cols;
-
-    _beta = _computeBeta();
-
-    if (statistics) {
-      _variance = _computeVariance();
+  }) : assert(
+          (x == null && y == null) || (x != null && y != null),
+          'Both x and y must be provided together',
+        ) {
+    if (x != null && y != null) {
+      fit(x: x, y: y);
     }
   }
 
@@ -66,25 +62,34 @@ class MultivariateLinearRegression {
   }
 
   /// Design matrix (X)
-  late Matrix _x;
+  late Matrix? _designMatrix;
+
+  /// Design matrix (X) (Internal non-null accessors used after training).
+  Matrix get _x => _designMatrix ?? (throw StateError('Model has not been fitted, call fit() with training data'));
 
   /// Output matrix (Y)
-  late Matrix _y;
+  late Matrix? _targetMatrix;
+
+  /// Output matrix (Y) (Internal non-null accessors used after training).
+  Matrix get _y => _targetMatrix ?? (throw StateError('Model has not been fitted, call fit() with training data'));
 
   /// Coefficient matrix (β)
-  late Matrix _beta;
+  Matrix? _trainedBeta;
+
+  /// Coefficient matrix (β) (Internal non-null accessors used after training).
+  Matrix get _beta => _trainedBeta ?? (throw StateError('Model has not been fitted, call fit() with training data'));
 
   /// Number of input features (p)
-  late int _inputs;
+  int? _inputs;
 
   /// Number of output variables (k)
-  late int _outputs;
+  int? _outputs;
 
   /// Residual variance (σ²)
   double? _variance;
 
   /// Original input data (X)
-  late List<List<double>> _originalX;
+  List<List<double>>? _originalX;
 
   /// Original output data (Y)
   late List<List<double>> _originalY;
@@ -96,19 +101,49 @@ class MultivariateLinearRegression {
   final bool statistics;
 
   /// Number of input features (p)
-  int get inputs => _inputs;
+  int get inputs => _inputs ?? 0;
 
   /// Number of output variables (k)
-  int get outputs => _outputs;
+  int get outputs => _outputs ?? 0;
 
   /// Regression coefficients (β)
-  List<List<double>> get weights => _beta.toList();
+  List<List<double>> get weights => _trainedBeta?.toList() ?? [];
 
   /// Standard error of the regression
   ///
   /// Formula:
   ///   σ = √σ²
   double? get stdError => _variance == null ? null : sqrt(_variance!);
+
+  /// Fits the model to the provided training data.
+  ///
+  /// Can be used to fit a new model or refit an existing model with new data.
+  ///
+  /// [x] is the input matrix with shape `(rows × features)`.
+  ///
+  /// [y] is the output matrix with shape `(rows × outputs)`.
+  void fit({required List<List<double>> x, required List<List<double>> y}) {
+    _originalX = x;
+    _originalY = y;
+
+    _designMatrix = Matrix.fromList(x);
+    _targetMatrix = Matrix.fromList(y);
+
+    if (intercept) {
+      final data = List.generate(_x.rows, (_) => [1.0]);
+      final ones = Matrix.fromList(data);
+      _designMatrix = _x.appendColumn(ones);
+    }
+
+    _inputs = _x.cols - (intercept ? 1 : 0);
+    _outputs = _y.cols;
+
+    _trainedBeta = _computeBeta();
+
+    if (statistics) {
+      _variance = _computeVariance();
+    }
+  }
 
   /// Computes the covariance matrix of the coefficients.
   ///
