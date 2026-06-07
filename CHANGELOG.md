@@ -1,6 +1,6 @@
 ## 0.3.0+1
 
-- Fix documentation, `x` and `y` are nullable in constructor
+- Fix documentation, `x` and `y` are nullable in constructor, and add documentation for  `fit()`
 
 ## 0.3.0
 
