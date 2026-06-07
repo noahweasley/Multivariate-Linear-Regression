@@ -78,8 +78,8 @@ void main() {
 
 ```dart
 MultivariateLinearRegression({
-  required List<List<double>> x,
-  required List<List<double>> y,
+  List<List<double>>? x,
+  List<List<double>>? y,
   bool intercept = true,
   bool statistics = true,
 })

@@ -1,3 +1,7 @@
+## 0.3.0+1
+
+- Fix documentation, `x` and `y` are nullable in constructor
+
 ## 0.3.0
 
 - Add `fit()` method as an alternative to initializing the design and target matrices in the constructor. Useful if refitting an already existing model is needed
