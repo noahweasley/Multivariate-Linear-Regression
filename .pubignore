@@ -24,3 +24,6 @@ pubspec.lock
 *.log
 *.tmp
 *.DS_Store
+
+# Misc
+CONTRIBUTING.md
